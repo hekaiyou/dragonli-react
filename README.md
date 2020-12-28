@@ -6,11 +6,9 @@
 
 ```
 .
-├── runtime.txt
-├── app.py
-├── Procfile
+├── package-lock.json
+├── package.json
 ├── README.md
-├── requirements.txt
 ```
 
 ### 本地验证准备
