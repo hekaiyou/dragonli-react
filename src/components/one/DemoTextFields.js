@@ -13,6 +13,10 @@ export default function DemoTextFields() {
         setValues({ ...values, [prop]: event.target.value });
     };
 
+    const submitUser = (prop) => (event) => {
+        // Submit点击事件
+    };
+
     return (
         <form noValidate autoComplete="off">
             <TextField
@@ -31,7 +35,7 @@ export default function DemoTextFields() {
                 onChange={handleChange('age')}
             />
             <p />
-            <Button variant="contained" color="primary" >
+            <Button variant="contained" color="primary" onClick={submitUser()}>
                 submit
             </Button>
         </form>
