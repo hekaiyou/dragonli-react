@@ -46,7 +46,7 @@ function App() {
                             <MenuIcon />
                         </IconButton>
                         <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                            Rainbond React Demo
+                            Dragon-Li Test
                         </Typography>
                     </Toolbar>
                 </AppBar>

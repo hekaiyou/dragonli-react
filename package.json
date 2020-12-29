@@ -1,7 +1,7 @@
 {
-  "name": "rainbond-react-demo",
+  "name": "dragonli-react",
   "version": "1.0.0",
-  "description": "Rainbond React Demo",
+  "description": "Dragon-Li React",
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",

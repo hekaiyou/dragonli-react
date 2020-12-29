@@ -5,7 +5,7 @@ export const copyright = (
     <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         <Link color="inherit" href="https://github.com/hekaiyou/rainbond-react-demo">
-            Rainbond React Demo
+            dragonli test
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
