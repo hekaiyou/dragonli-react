@@ -12,7 +12,7 @@ export const mainListItems = (
             <ListItemIcon>
                 <FilterTiltShiftIcon />
             </ListItemIcon>
-            <ListItemText primary="OnePage" />
+            <ListItemText primary="TTS Server" />
         </ListItem>
         <ListItem button component={Link} to="/two">
             <ListItemIcon>

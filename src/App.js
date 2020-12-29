@@ -17,7 +17,7 @@ import { copyright } from './dashboard/copyright';
 import { useStyles } from './dashboard/styles';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-const One = lazy(() => import('./pages/One'));
+const Synthesis = lazy(() => import('./pages/Synthesis'));
 const Two = lazy(() => import('./pages/Two'));
 
 function App() {
@@ -70,7 +70,7 @@ function App() {
                     <Container maxWidth="lg" className={classes.container}>
                         <Suspense fallback={<div>Loading...</div>}>
                             <Switch>
-                                <Route exact path="/" component={One} />
+                                <Route exact path="/" component={Synthesis} />
                                 <Route path="/two" component={Two} />
                             </Switch>
                         </Suspense>
