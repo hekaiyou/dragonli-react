@@ -12,9 +12,11 @@ class Synthesis extends React.Component {
 
     handleLanguageSelect(i) {
         const newLanguage = i.target.value;
-        this.setState({
-            language: newLanguage,
-        });
+        if (newLanguage) {
+            this.setState({
+                language: newLanguage,
+            });
+        }
     }
 
     render() {
