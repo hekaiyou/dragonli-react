@@ -10,13 +10,20 @@ class Synthesis extends React.Component {
         };
     }
 
+    handleLanguageSelect(i) {
+        const newLanguage = i.target.value;
+        this.setState({
+            language: newLanguage,
+        });
+    }
+
     render() {
         return (
             <div>
                 <form noValidate autoComplete="off">
                     <TextField id="tts-key" label="TTS Key (Englist)" fullWidth />
                     <p />
-                    <SynthesisLanguageSelect />
+                    <SynthesisLanguageSelect language={this.state.language} onClick={i => this.handleLanguageSelect(i)} />
                 </form>
             </div>
         );

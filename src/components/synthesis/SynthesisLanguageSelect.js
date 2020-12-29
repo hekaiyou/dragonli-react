@@ -15,22 +15,22 @@ class SynthesisLanguageSelect extends React.Component {
         return (
             <FormControl fullWidth>
                 <InputLabel id="tts-language-label">TTS Language</InputLabel>
-                <Select labelId="tts-language-label" id="tts-language">
+                <Select labelId="tts-language-label" id="tts-language" value={this.props.language} onClick={this.props.onClick}>
                     {this.renderSelect('en-us', 'English (English en-us)')}
                     {this.renderSelect('zh-cn', '中文 (Chinese zh-cn)')}
                     {this.renderSelect('de-de', 'Deutsche (German de-de)')}
                     {this.renderSelect('es-es', 'Español (Spanish es-es)')}
-                    <MenuItem value="fr-fr">français (French fr-fr)</MenuItem>
-                    <MenuItem value="ja-jp">日本語 (Japanese ja-jp)</MenuItem>
-                    <MenuItem value="nl-nl">Nederlands (Dutch nl-nl)</MenuItem>
-                    <MenuItem value="ru-ru">русский (Russian ru-ru)</MenuItem>
-                    <MenuItem value="ko-kr">한국어 (Korean ko-kr)</MenuItem>
-                    <MenuItem value="it-it">italiano (Italian it-it)</MenuItem>
-                    <MenuItem value="pl-pl">Polskie (Poland pl-pl)</MenuItem>
-                    <MenuItem value="sv-se">svenska (Sweden sv-se)</MenuItem>
-                    <MenuItem value="da-dk">dansk (Danish da-dk)</MenuItem>
-                    <MenuItem value="nb-no">norsk (Norwegian nb-no)</MenuItem>
-                    <MenuItem value="pt-pt">Português (Portuguese pt-pt)</MenuItem>
+                    {this.renderSelect('fr-fr', 'français (French fr-fr)')}
+                    {this.renderSelect('ja-jp', '日本語 (Japanese ja-jp)')}
+                    {this.renderSelect('nl-nl', 'Nederlands (Dutch nl-nl)')}
+                    {this.renderSelect('ru-ru', 'русский (Russian ru-ru)')}
+                    {this.renderSelect('ko-kr', '한국어 (Korean ko-kr)')}
+                    {this.renderSelect('it-it', 'italiano (Italian it-it)')}
+                    {this.renderSelect('pl-pl', 'Polskie (Poland pl-pl)')}
+                    {this.renderSelect('sv-se', 'svenska (Sweden sv-se)')}
+                    {this.renderSelect('da-dk', 'dansk (Danish da-dk)')}
+                    {this.renderSelect('nb-no', 'norsk (Norwegian nb-no)')}
+                    {this.renderSelect('pt-pt', 'Português (Portuguese pt-pt)')}
                 </Select>
             </FormControl>
         );
