@@ -1,9 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 
 
 class Synthesis extends React.Component {
@@ -11,7 +8,7 @@ class Synthesis extends React.Component {
         super(props);
         this.state = {
             text: '',
-            history: ['sj'],
+            url: '',
         };
     }
 
@@ -24,26 +21,13 @@ class Synthesis extends React.Component {
     handleButtonClick() {
         const text = this.state.text;
         if (text.trim() !== '') {
-            const history = this.state.history;
-            history.push(text);
             this.setState({
-                history: history,
+                url: 'http://172.24.27.81:5000/?text=' + text,
             })
         }
     }
 
     render() {
-        const textAndAudio = this.state.history.forEach((item) => {
-            return (
-                <Typography>
-                    {item}
-                    <audio controls autoPlay src="http://0.0.0.0:5000/?text={item}" type="audio/wav">
-                        Your browser does not support the audio element.
-                    </audio>
-                </Typography>
-            );
-        });
-
         return (
             <div>
                 <form noValidate autoComplete="off">
@@ -53,11 +37,9 @@ class Synthesis extends React.Component {
                         Text To Speech
                     </Button>
                     <p />
-                    <Card>
-                        <CardContent>
-                            {textAndAudio}
-                        </CardContent>
-                    </Card>
+                    <audio controls autoPlay src={this.state.url} type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
                 </form>
             </div>
         );
