@@ -2,4 +2,4 @@ FROM nginx:alpine
 WORKDIR /app
 ADD . /app
 COPY /build/ /usr/share/nginx/html/
-EXPOSE 6001
+EXPOSE 80
