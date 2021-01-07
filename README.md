@@ -1,4 +1,17 @@
-# Rainbond React 组件示例
+# dragonli-react
+
+Dragon-Li React UI Server
+
+与 Dragon-Li Python xxxx Server 相对应的 React 前端 UI 组件。
+
+### 组件基本结构
+
+```
+.
+├── package-lock.json   # 使用npm包管理器构建
+├── package.json        # 
+```
+
 
 ## 项目介绍
 

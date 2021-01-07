@@ -14,11 +14,11 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="TTS Server" />
         </ListItem>
-        <ListItem button component={Link} to="/two">
+        <ListItem button component={Link} to="/compose">
             <ListItemIcon>
                 <LocalLibraryIcon />
             </ListItemIcon>
-            <ListItemText primary="TwoPage" />
+            <ListItemText primary="Composes" />
         </ListItem>
     </div>
 );

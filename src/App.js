@@ -18,7 +18,7 @@ import { useStyles } from './dashboard/styles';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 const Synthesis = lazy(() => import('./pages/Synthesis'));
-const Two = lazy(() => import('./pages/Two'));
+const Compose = lazy(() => import('./pages/Compose'));
 
 function App() {
     const classes = useStyles();
@@ -71,7 +71,7 @@ function App() {
                         <Suspense fallback={<div>Loading...</div>}>
                             <Switch>
                                 <Route exact path="/" component={Synthesis} />
-                                <Route path="/two" component={Two} />
+                                <Route path="/compose" component={Compose} />
                             </Switch>
                         </Suspense>
                         <Box pt={4}>{copyright}</Box>
