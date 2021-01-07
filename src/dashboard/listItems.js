@@ -14,7 +14,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="TTS Server" />
         </ListItem>
-        <ListItem button component={Link} to="/?compose">
+        <ListItem button component={Link} to="/compose">
             <ListItemIcon>
                 <LocalLibraryIcon />
             </ListItemIcon>

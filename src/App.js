@@ -71,7 +71,7 @@ function App() {
                         <Suspense fallback={<div>Loading...</div>}>
                             <Switch>
                                 <Route exact path="/" component={Synthesis} />
-                                <Route path="/?compose" component={Compose} />
+                                <Route path="/compose" component={Compose} />
                             </Switch>
                         </Suspense>
                         <Box pt={4}>{copyright}</Box>
