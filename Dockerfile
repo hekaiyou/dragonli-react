@@ -1,8 +1,5 @@
-FROM node:lts
+FROM nginx:alpine
 WORKDIR /app
 ADD . /app
-RUN npm install
-RUN npm run build
-RUN npm install -g http-server
-CMD ["http-server", "./build", "-p", "6001", "-a"]
+COPY /app/build /usr/share/nginx/html/
 EXPOSE 6001
