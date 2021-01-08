@@ -3,6 +3,8 @@ WORKDIR /app
 ADD . /app
 RUN apt-get update
 RUN apt-get install -y nginx
+RUN rm /etc/nginx/nginx.conf
+ADD nginx.conf /etc/nginx/
 RUN service nginx start
 RUN npm install
 RUN npm run build
