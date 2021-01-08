@@ -22,7 +22,7 @@ class Synthesis extends React.Component {
         const text = this.state.text;
         if (text.trim() !== '') {
             this.setState({
-                url: 'http://192.168.5.170:6002/dragonli/1.0/tts/?text=' + text,
+                url: process.env.API_TTS_URL + '?text=' + text,
             })
         }
     }
