@@ -36,8 +36,7 @@ class Synthesis extends React.Component {
                     <Button variant="contained" color="primary" onClick={() => this.handleButtonClick()} fullWidth>
                         Text To Speech
                     </Button>
-                    <p />
-                    <audio controls autoPlay src={this.state.url} type="audio/wav">
+                    <audio controls autoPlay src={this.state.url} type="audio/wav" hidden>
                         Your browser does not support the audio element.
                     </audio>
                 </form>
