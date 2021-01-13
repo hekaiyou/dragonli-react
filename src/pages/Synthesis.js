@@ -21,9 +21,15 @@ class Synthesis extends React.Component {
     handleButtonClick() {
         const text = this.state.text;
         if (text.trim() !== '') {
-            this.setState({
-                url: '/api/1.0/tts?text=' + text,
-            })
+            let newUrl = '/api/1.0/tts?text=' + text;
+            if (newUrl !== this.state.url) {
+                this.setState({
+                    url: newUrl,
+                })
+            } else {
+                let ttsAudio = document.getElementById('tts-audio');
+                ttsAudio.play();
+            }
         }
     }
 
@@ -36,7 +42,7 @@ class Synthesis extends React.Component {
                     <Button variant="contained" color="primary" onClick={() => this.handleButtonClick()} fullWidth>
                         Text To Speech
                     </Button>
-                    <audio controls autoPlay src={this.state.url} type="audio/wav" hidden>
+                    <audio controls id="tts-audio" autoPlay src={this.state.url} type="audio/wav" hidden>
                         Your browser does not support the audio element.
                     </audio>
                 </form>

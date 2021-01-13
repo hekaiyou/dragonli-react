@@ -10,6 +10,7 @@ class Compose extends React.Component {
         return (
             <div>
                 <TextField id="search" label="Search Script" fullWidth />
+                <p />
                 <List>
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
                         <ListItem button>
@@ -19,7 +20,7 @@ class Compose extends React.Component {
                 </List>
                 <p />
                 <Button variant="contained" color="primary" fullWidth>
-                    Create new script
+                    Create New Script
                 </Button>
             </div>
         );
