@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import Slide from '@material-ui/core/Slide';
+import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -46,6 +48,14 @@ function EditReactDialog(props) {
                     </Button>
                 </Toolbar>
             </AppBar>
+            <Container>
+                <form noValidate autoComplete="off">
+                    <p />
+                    <TextField id="script-title" label="Script Title" fullWidth />
+                    <p />
+                    <TextField id="script-content" label="Script Content (Enter Wrap)" multiline fullWidth />
+                </form>
+            </Container>
         </Dialog>
     );
 }
