@@ -1,54 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+function Synthesis() {
+    const [text, setText] = useState('');
+    const [url, setUrl] = useState('');
 
-class Synthesis extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            text: '',
-            url: '',
-        };
-    }
+    const handleTextFieldChange = (e) => {
+        setText(e.target.value);
+    };
 
-    handleTextFieldChange(e) {
-        this.setState({
-            text: e.target.value,
-        })
-    }
-
-    handleButtonClick() {
-        const text = this.state.text;
-        if (text.trim() !== '') {
-            let newUrl = '/api/1.0/tts?text=' + text;
-            if (newUrl !== this.state.url) {
-                this.setState({
-                    url: newUrl,
-                })
+    const handleButtonClick = (e) => {
+        let new_text = text;
+        if (new_text.trim() !== '') {
+            let newUrl = '/api/1.0/tts?text=' + new_text;
+            if (newUrl !== url) {
+                setUrl(newUrl);
             } else {
                 let ttsAudio = document.getElementById('tts-audio');
                 ttsAudio.play();
             }
         }
-    }
+    };
 
-    render() {
-        return (
-            <div>
-                <form noValidate autoComplete="off">
-                    <TextField id="tts-text" onChange={(e) => this.handleTextFieldChange(e)} label="TTS Text" multiline rows={3} fullWidth />
-                    <p />
-                    <Button variant="contained" color="primary" onClick={() => this.handleButtonClick()} fullWidth>
-                        Text To Speech
+    return (
+        <div>
+            <form noValidate autoComplete="off">
+                <TextField id="tts-text" onChange={handleTextFieldChange} label="TTS Text" multiline rows={3} fullWidth />
+                <p />
+                <Button variant="contained" color="primary" onClick={handleButtonClick} fullWidth>
+                    Text To Speech
                     </Button>
-                    <audio controls id="tts-audio" autoPlay src={this.state.url} type="audio/wav" hidden>
-                        Your browser does not support the audio element.
-                    </audio>
-                </form>
-            </div>
-        );
-    }
+                <audio controls id="tts-audio" autoPlay src={url} type="audio/wav" hidden>
+                    Your browser does not support the audio element.
+                </audio>
+            </form>
+        </div>
+    );
 }
 
 export default Synthesis;
