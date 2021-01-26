@@ -33,6 +33,10 @@ function EditReactDialog(props) {
         onClose();
     };
 
+    const handleSave = () => {
+        console.log();
+    };
+
     return (
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
             <AppBar className={classes.appBar}>
@@ -43,7 +47,7 @@ function EditReactDialog(props) {
                     <Typography variant="h6" className={classes.title}>
                         Edit Script
                     </Typography>
-                    <Button autoFocus color="inherit" onClick={handleClose}>
+                    <Button autoFocus color="inherit" onClick={handleSave}>
                         Save
                     </Button>
                 </Toolbar>

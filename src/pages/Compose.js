@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,6 +12,29 @@ import axios from 'axios';
 
 function Compose() {
     const [openEdit, setOpenEdit] = useState(false);
+    const [scriptList, setScriptList] = useState([]);
+
+    useEffect(() => {
+        handleScriptList('');
+        // eslint-disable-next-line
+    }, []);
+
+    const handleScriptList = (searchValue) => {
+        axios.get('/api/1.0/script', {
+            params: {
+                search: searchValue,
+            }
+        }).then(function (response) {
+            setScriptList(response.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+
+    const handleTextFieldChange = (e) => {
+        let newSearchValue = e.target.value;
+        handleScriptList(newSearchValue);
+    };
 
     const handleClickOpenEdit = () => {
         setOpenEdit(true);
@@ -23,12 +46,12 @@ function Compose() {
 
     return (
         <div>
-            <TextField id="search" label="Search Script" fullWidth />
+            <TextField id="search" onChange={handleTextFieldChange} label="Search Script" fullWidth />
             <p />
             <List>
-                {[1, 2, 3, 4, 5].map((item) => (
-                    <ListItem button>
-                        <ListItemText primary={item} />
+                {scriptList.map((item) => (
+                    <ListItem button key={item.id}>
+                        <ListItemText primary={item.title} />
                         <ListItemSecondaryAction>
                             <IconButton edge="end" aria-label="edit">
                                 <EditIcon />
