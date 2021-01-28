@@ -40,6 +40,11 @@ function Compose() {
         setOpenEdit(true);
     };
 
+    const handleClickOpenEditOld = (e) => {
+        console.log(e)
+        setOpenEdit(true);
+    };
+
     const handleCloseEdit = (result) => {
         setOpenEdit(false);
         if (result) {
@@ -56,7 +61,7 @@ function Compose() {
                 {scriptList.map((item) => (
                     <ListItem button key={item.id}>
                         <ListItemText primary={item.title} />
-                        <ListItemSecondaryAction>
+                        <ListItemSecondaryAction onClick={handleClickOpenEditOld} value={2333}>
                             <IconButton edge="end" aria-label="edit">
                                 <EditIcon />
                             </IconButton>
