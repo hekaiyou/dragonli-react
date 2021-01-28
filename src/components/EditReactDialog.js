@@ -32,18 +32,21 @@ function EditReactDialog(props) {
     const [subDisabled, setSubDisabled] = useState(true);
 
     const handleClose = () => {
-        onClose();
+        onClose(false);
     };
 
     const handleSave = () => {
+        let titleValue = document.getElementById('script-title').value;
+        let contentValue = document.getElementById('script-content').value;
         setSubDisabled(true);
         axios.post('http://localhost:5000/api/1.0/script', {
-            title: '',
-            script: '',
+            title: titleValue,
+            script: contentValue,
         }).then(function (response) {
-            setSubDisabled(false);
+            onClose(true);
         }).catch(function (error) {
             console.log(error)
+            setSubDisabled(false);
         });
     };
 

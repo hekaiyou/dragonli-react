@@ -40,8 +40,12 @@ function Compose() {
         setOpenEdit(true);
     };
 
-    const handleCloseEdit = () => {
+    const handleCloseEdit = (result) => {
         setOpenEdit(false);
+        if (result) {
+            let oldSearchValue = document.getElementById('search').value;
+            handleScriptList(oldSearchValue);
+        }
     };
 
     return (
@@ -63,7 +67,7 @@ function Compose() {
             <p />
             <Button variant="contained" color="primary" fullWidth onClick={handleClickOpenEdit}>
                 Create New Script
-                </Button>
+            </Button>
             <EditReactDialog open={openEdit} onClose={handleCloseEdit} />
         </div>
     );
