@@ -20,7 +20,7 @@ function Compose() {
     }, []);
 
     const handleScriptList = (searchValue) => {
-        axios.get('/api/1.0/script', {
+        axios.get('http://localhost:5000/api/1.0/script', {
             params: {
                 search: searchValue,
             }

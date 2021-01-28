@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -28,13 +29,32 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function EditReactDialog(props) {
     const classes = useStyles();
     const { onClose, open } = props;
+    const [subDisabled, setSubDisabled] = useState(true);
 
     const handleClose = () => {
         onClose();
     };
 
     const handleSave = () => {
-        console.log();
+        setSubDisabled(true);
+        axios.post('http://localhost:5000/api/1.0/script', {
+            title: '',
+            script: '',
+        }).then(function (response) {
+            setSubDisabled(false);
+        }).catch(function (error) {
+            console.log(error)
+        });
+    };
+
+    const handleTextFieldChange = (e) => {
+        let titleValue = document.getElementById('script-title').value;
+        let contentValue = document.getElementById('script-content').value;
+        if (titleValue.trim() !== '' && contentValue.trim() !== '') {
+            setSubDisabled(false);
+        } else {
+            setSubDisabled(true);
+        }
     };
 
     return (
@@ -47,7 +67,7 @@ function EditReactDialog(props) {
                     <Typography variant="h6" className={classes.title}>
                         Edit Script
                     </Typography>
-                    <Button autoFocus color="inherit" onClick={handleSave}>
+                    <Button autoFocus color="inherit" onClick={handleSave} disabled={subDisabled}>
                         Save
                     </Button>
                 </Toolbar>
@@ -55,9 +75,9 @@ function EditReactDialog(props) {
             <Container>
                 <form noValidate autoComplete="off">
                     <p />
-                    <TextField id="script-title" label="Script Title" fullWidth />
+                    <TextField id="script-title" label="Script Title" onChange={handleTextFieldChange} fullWidth />
                     <p />
-                    <TextField id="script-content" label="Script Content (Enter Wrap)" multiline fullWidth />
+                    <TextField id="script-content" label="Script Content (Enter Wrap)" onChange={handleTextFieldChange} multiline fullWidth />
                 </form>
             </Container>
         </Dialog>
