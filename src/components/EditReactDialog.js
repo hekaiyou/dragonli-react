@@ -28,10 +28,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function EditReactDialog(props) {
     const classes = useStyles();
-    const { onClose, open } = props;
+    const { onClose, open, currentDict } = props;
     const [subDisabled, setSubDisabled] = useState(true);
 
     const handleClose = () => {
+        console.log(currentDict);
         onClose(false);
     };
 

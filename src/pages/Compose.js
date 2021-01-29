@@ -13,6 +13,7 @@ import axios from 'axios';
 function Compose() {
     const [openEdit, setOpenEdit] = useState(false);
     const [scriptList, setScriptList] = useState([]);
+    const [currentItem, setCurrentItem] = useState({});
 
     useEffect(() => {
         handleScriptList('');
@@ -36,12 +37,8 @@ function Compose() {
         handleScriptList(newSearchValue);
     };
 
-    const handleClickOpenEdit = () => {
-        setOpenEdit(true);
-    };
-
-    const handleClickOpenEditOld = (e) => {
-        console.log(e)
+    const handleClickOpenEdit = (item) => {
+        setCurrentItem(item);
         setOpenEdit(true);
     };
 
@@ -61,7 +58,7 @@ function Compose() {
                 {scriptList.map((item) => (
                     <ListItem button key={item.id}>
                         <ListItemText primary={item.title} />
-                        <ListItemSecondaryAction onClick={handleClickOpenEditOld} value={2333}>
+                        <ListItemSecondaryAction onClick={() => { handleClickOpenEdit(item) }}>
                             <IconButton edge="end" aria-label="edit">
                                 <EditIcon />
                             </IconButton>
@@ -70,10 +67,10 @@ function Compose() {
                 ))}
             </List>
             <p />
-            <Button variant="contained" color="primary" fullWidth onClick={handleClickOpenEdit}>
+            <Button variant="contained" color="primary" fullWidth onClick={() => { handleClickOpenEdit({}) }}>
                 Create New Script
             </Button>
-            <EditReactDialog open={openEdit} onClose={handleCloseEdit} />
+            <EditReactDialog open={openEdit} onClose={handleCloseEdit} currentDict={currentItem} />
         </div>
     );
 }
