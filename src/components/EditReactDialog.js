@@ -12,6 +12,11 @@ import Container from '@material-ui/core/Container';
 import Fab from '@material-ui/core/Fab';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Button from '@material-ui/core/Button';
+
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,9 +43,18 @@ function EditReactDialog(props) {
     const { onClose, open, currentDict } = props;
     const [subDisabled, setSubDisabled] = useState(true);
     const [deleteDisabled, setDeleteDisabled] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
 
     const handleClose = () => {
         onClose(false);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
+    const handleClickOpenDialog = () => {
+        setOpenDialog(true);
     };
 
     const handleSave = () => {
@@ -48,7 +62,7 @@ function EditReactDialog(props) {
         let contentValue = document.getElementById('script-content').value;
         setSubDisabled(true);
         if (currentDict.id) {
-            axios.put('http://localhost:5000/api/1.0/script', {
+            axios.put('/api/1.0/script', {
                 id: currentDict.id,
                 title: titleValue,
                 script: contentValue,
@@ -59,7 +73,7 @@ function EditReactDialog(props) {
                 setSubDisabled(false);
             });
         } else {
-            axios.post('http://localhost:5000/api/1.0/script', {
+            axios.post('/api/1.0/script', {
                 title: titleValue,
                 script: contentValue,
             }).then(function (response) {
@@ -74,10 +88,11 @@ function EditReactDialog(props) {
     const handleDelete = () => {
         if (currentDict.id) {
             setDeleteDisabled(true);
-            axios.delete('http://localhost:5000/api/1.0/script', {
-                id: currentDict.id,
+            axios.delete('/api/1.0/script', {
+                data: { id: currentDict.id },
             }).then(function (response) {
                 onClose(true);
+                setDeleteDisabled(false);
             }).catch(function (error) {
                 console.log(error)
                 setDeleteDisabled(false);
@@ -106,7 +121,7 @@ function EditReactDialog(props) {
                         Edit Script
                     </Typography>
                     {currentDict.id ? (
-                        <IconButton aria-label="delete" color="secondary" onClick={handleDelete} disabled={deleteDisabled}>
+                        <IconButton aria-label="delete" color="secondary" onClick={handleClickOpenDialog} disabled={deleteDisabled}>
                             <DeleteIcon />
                         </IconButton>
                     ) : null}
@@ -123,6 +138,21 @@ function EditReactDialog(props) {
             <Fab color="primary" className={classes.absolute} onClick={handleSave} disabled={subDisabled}>
                 <SaveIcon />
             </Fab>
+            <Dialog open={openDialog} onClose={handleCloseDialog} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Please confirm whether you want to delete this script?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary" autoFocus>
+                        Cancel
+                    </Button>
+                    <Button onClick={handleDelete} color="secondary">
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Dialog>
     );
 }
