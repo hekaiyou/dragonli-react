@@ -8,10 +8,12 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import EditReactDialog from '../components/EditReactDialog.js';
+import BroadcastDialog from '../components/BroadcastDialog.js';
 import axios from 'axios';
 
 function Compose() {
     const [openEdit, setOpenEdit] = useState(false);
+    const [openBroadcast, setOpenBroadcast] = useState(false);
     const [scriptList, setScriptList] = useState([]);
     const [currentItem, setCurrentItem] = useState({});
 
@@ -21,7 +23,7 @@ function Compose() {
     }, []);
 
     const handleScriptList = (searchValue) => {
-        axios.get('/api/1.0/script', {
+        axios.get('http://speech.atp.leedarson.lds/api/1.0/script', {
             params: {
                 search: searchValue,
             }
@@ -42,6 +44,11 @@ function Compose() {
         setOpenEdit(true);
     };
 
+    const handleClickOpenBroadcast = (item) => {
+        setCurrentItem(item);
+        setOpenBroadcast(true);
+    };
+
     const handleCloseEdit = (result) => {
         setOpenEdit(false);
         if (result) {
@@ -50,13 +57,17 @@ function Compose() {
         }
     };
 
+    const handleCloseBroadcast = () => {
+        setOpenBroadcast(false);
+    };
+
     return (
         <div>
             <TextField id="search" onChange={handleTextFieldChange} label="Search Script" fullWidth />
             <p />
             <List>
                 {scriptList.map((item) => (
-                    <ListItem button key={item.id}>
+                    <ListItem button key={item.id} onClick={() => { handleClickOpenBroadcast(item) }}>
                         <ListItemText primary={item.title} />
                         <ListItemSecondaryAction onClick={() => { handleClickOpenEdit(item) }}>
                             <IconButton edge="end" aria-label="edit">
@@ -71,6 +82,7 @@ function Compose() {
                 Create New Script
             </Button>
             <EditReactDialog open={openEdit} onClose={handleCloseEdit} currentDict={currentItem} />
+            <BroadcastDialog open={openBroadcast} onClose={handleCloseBroadcast} currentDict={currentItem} />
         </div>
     );
 }
