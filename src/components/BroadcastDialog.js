@@ -29,25 +29,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function getSteps() {
-    return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+function getSteps(scripts) {
+    if (scripts) {
+        let scriptArr = scripts.split(/[\s\n]/).filter(_ => _);
+        return scriptArr;
+    } else {
+        return [];
+    }
 }
 
-function getStepContent(step) {
-    switch (step) {
+function getStepContent(step, script) {
+    switch (script) {
         case 0:
-            return `For each ad campaign that you create, you can control how much
-                you're willing to spend on clicks and conversions, which networks
-                and geographical locations you want your ads to show on, and more.`;
-        case 1:
-            return 'An ad group contains one or more ads which target a shared set of keywords.';
-        case 2:
-            return `Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your ads using features like ad extensions.
-                If you run into any problems with your ads, find out how to tell if
-                they're running and how to resolve approval issues.`;
+            return ``;
         default:
-            return 'Unknown step';
+            let new_url = '/api/1.0/tts?text=' + script;
+            return <audio controls id="tts-audio" url={new_url} type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>;
     }
 }
 
@@ -55,7 +54,7 @@ function BroadcastDialog(props) {
     const classes = useStyles();
     const { onClose, open, currentDict } = props;
     const [activeStep, setActiveStep] = React.useState(0);
-    const steps = getSteps();
+    const steps = getSteps(currentDict.script);
 
     const handleClose = () => {
         onClose(false);
@@ -92,7 +91,7 @@ function BroadcastDialog(props) {
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
                                 <StepContent>
-                                    <Typography>{getStepContent(index)}</Typography>
+                                    <Typography>{getStepContent(index, label)}</Typography>
                                     <div className={classes.actionsContainer}>
                                         <div>
                                             <Button
@@ -118,7 +117,7 @@ function BroadcastDialog(props) {
                     </Stepper>
                     {activeStep === steps.length && (
                         <Paper square elevation={0} className={classes.resetContainer}>
-                            <Typography>All steps completed - you&apos;re finished</Typography>
+                            <Typography>All the sounds have been played !</Typography>
                             <Button onClick={handleReset} className={classes.button}>
                                 Reset
                             </Button>
