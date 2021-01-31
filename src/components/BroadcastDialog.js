@@ -43,10 +43,7 @@ function getStepContent(step, script) {
         case 0:
             return ``;
         default:
-            let new_url = '/api/1.0/tts?text=' + script;
-            return <audio controls id="tts-audio" url={new_url} type="audio/wav">
-                Your browser does not support the audio element.
-            </audio>;
+            return `占个位置`;
     }
 }
 
@@ -54,13 +51,23 @@ function BroadcastDialog(props) {
     const classes = useStyles();
     const { onClose, open, currentDict } = props;
     const [activeStep, setActiveStep] = React.useState(0);
+    const [url, setUrl] = React.useState('');
     const steps = getSteps(currentDict.script);
 
     const handleClose = () => {
         onClose(false);
     };
 
-    const handleNext = () => {
+    const handleNext = (script) => {
+        if (script.trim() !== '') {
+            let newUrl = '/api/1.0/tts?text=' + script;
+            if (newUrl !== url) {
+                setUrl(newUrl);
+            } else {
+                let ttsAudio = document.getElementById('tts-audio-script');
+                ttsAudio.play();
+            }
+        }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
@@ -88,7 +95,7 @@ function BroadcastDialog(props) {
                 <div className={classes.root}>
                     <Stepper activeStep={activeStep} orientation="vertical">
                         {steps.map((label, index) => (
-                            <Step key={label}>
+                            <Step key={index}>
                                 <StepLabel>{label}</StepLabel>
                                 <StepContent>
                                     <Typography>{getStepContent(index, label)}</Typography>
@@ -104,7 +111,7 @@ function BroadcastDialog(props) {
                                             <Button
                                                 variant="contained"
                                                 color="primary"
-                                                onClick={handleNext}
+                                                onClick={() => { handleNext(label) }}
                                                 className={classes.button}
                                             >
                                                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
@@ -125,6 +132,9 @@ function BroadcastDialog(props) {
                     )}
                 </div>
             </Container>
+            <audio controls id="tts-audio-script" autoPlay src={url} type="audio/wav" hidden>
+                Your browser does not support the audio element.
+            </audio>
         </Dialog>
     );
 }
