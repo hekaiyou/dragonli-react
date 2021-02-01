@@ -38,15 +38,6 @@ function getSteps(scripts) {
     }
 }
 
-function getStepContent(step, script) {
-    switch (script) {
-        case 0:
-            return ``;
-        default:
-            return `占个位置`;
-    }
-}
-
 function BroadcastDialog(props) {
     const classes = useStyles();
     const { onClose, open, currentDict } = props;
@@ -56,7 +47,21 @@ function BroadcastDialog(props) {
 
     const handleClose = () => {
         setActiveStep(0);
+        setUrl('');
         onClose();
+    };
+
+    const getStepContent = (step, script) => {
+        console.log(step);
+        console.log(activeStep);
+        console.log(script);
+        console.log(activeStep === 0 && step === 0);
+        switch (script) {
+            case 0:
+                return ``;
+            default:
+                return `占个位置`;
+        }
     };
 
     const handleNext = (index) => {
