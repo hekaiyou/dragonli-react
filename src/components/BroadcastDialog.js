@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
@@ -50,22 +50,31 @@ function getStepContent(step, script) {
 function BroadcastDialog(props) {
     const classes = useStyles();
     const { onClose, open, currentDict } = props;
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [url, setUrl] = React.useState('');
+    const [activeStep, setActiveStep] = useState(0);
+    const [url, setUrl] = useState('');
     const steps = getSteps(currentDict.script);
+
+    useEffect(() => {
+        handleReset();
+        // eslint-disable-next-line
+    }, []);
 
     const handleClose = () => {
         onClose(false);
     };
 
-    const handleNext = (script) => {
-        if (script.trim() !== '') {
-            let newUrl = '/api/1.0/tts?text=' + script;
-            if (newUrl !== url) {
-                setUrl(newUrl);
-            } else {
-                let ttsAudio = document.getElementById('tts-audio-script');
-                ttsAudio.play();
+    const handleNext = (index) => {
+        if (index + 1 < steps.length) {
+            // 第一层：排除最后一个元素的点击
+            let next_script = steps[index + 1].trim();
+            if (next_script !== '') {
+                let newUrl = 'http://speech.atp.leedarson.lds/api/1.0/tts?text=' + next_script;
+                if (newUrl !== url) {
+                    setUrl(newUrl);
+                } else {
+                    let ttsAudio = document.getElementById('tts-audio-script');
+                    ttsAudio.play();
+                }
             }
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -111,7 +120,7 @@ function BroadcastDialog(props) {
                                             <Button
                                                 variant="contained"
                                                 color="primary"
-                                                onClick={() => { handleNext(label) }}
+                                                onClick={() => { handleNext(index) }}
                                                 className={classes.button}
                                             >
                                                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}

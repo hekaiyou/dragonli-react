@@ -23,7 +23,7 @@ function Compose() {
     }, []);
 
     const handleScriptList = (searchValue) => {
-        axios.get('/api/1.0/script', {
+        axios.get('http://speech.atp.leedarson.lds/api/1.0/script', {
             params: {
                 search: searchValue,
             }
