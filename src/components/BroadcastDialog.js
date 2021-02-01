@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
@@ -54,13 +54,9 @@ function BroadcastDialog(props) {
     const [url, setUrl] = useState('');
     const steps = getSteps(currentDict.script);
 
-    useEffect(() => {
-        handleReset();
-        // eslint-disable-next-line
-    }, []);
-
     const handleClose = () => {
-        onClose(false);
+        setActiveStep(0);
+        onClose();
     };
 
     const handleNext = (index) => {
