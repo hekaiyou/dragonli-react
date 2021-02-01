@@ -46,16 +46,12 @@ function BroadcastDialog(props) {
     const steps = getSteps(currentDict.script);
 
     const handleClose = () => {
-        setActiveStep(0);
         setUrl('');
+        setActiveStep(0);
         onClose();
     };
 
     const getStepContent = (step, script) => {
-        console.log(step);
-        console.log(activeStep);
-        console.log(script);
-        console.log(activeStep === 0 && step === 0);
         switch (script) {
             case 0:
                 return ``;
@@ -69,7 +65,7 @@ function BroadcastDialog(props) {
             // 第一层：排除最后一个元素的点击
             let next_script = steps[index + 1].trim();
             if (next_script !== '') {
-                let newUrl = 'http://speech.atp.leedarson.lds/api/1.0/tts?text=' + next_script;
+                let newUrl = '/api/1.0/tts?text=' + next_script;
                 if (newUrl !== url) {
                     setUrl(newUrl);
                 } else {
