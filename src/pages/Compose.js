@@ -9,14 +9,17 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import EditReactDialog from '../components/EditReactDialog.js';
 import BroadcastDialog from '../components/BroadcastDialog.js';
+import FillingDialog from '../components/FillingDialog.js';
 import axios from 'axios';
 
 function Compose() {
     const [openEdit, setOpenEdit] = useState(false);
     const [openBroadcast, setOpenBroadcast] = useState(false);
+    const [openFilling, setOpenFilling] = useState(false);
     const [scriptList, setScriptList] = useState([]);
     const [currentItem, setCurrentItem] = useState({});
     const [url, setUrl] = useState('');
+    const [fillList, setFillList] = useState([]);
 
     useEffect(() => {
         handleScriptList('');
@@ -47,10 +50,28 @@ function Compose() {
 
     const handleClickOpenBroadcast = (item) => {
         let scriptList = item['script'].split(/[\s\n]/).filter(_ => _);
-        handlePlay(scriptList[0]);
-        setCurrentItem(item);
-        setOpenBroadcast(true);
+        let reg = /(?<={).*?(?=(}|$))/g;
+        let valueList = [];
+        if (item['script'].search(reg) !== -1) {
+            item['script'].match(reg).map(function (v) {
+                if (valueList.indexOf(v) === -1) {
+                    valueList.push(v);
+                }
+                return null;
+            });
+            setCurrentItem(item);
+            setFillList(valueList);
+            handleOpenFilling();
+        } else {
+            handlePlay(scriptList[0]);
+            setCurrentItem(item);
+            setOpenBroadcast(true);
+        }
     };
+
+    const handleOpenFilling = () => {
+        setOpenFilling(true);
+    }
 
     const handleCloseEdit = (result) => {
         setOpenEdit(false);
@@ -64,8 +85,11 @@ function Compose() {
         setOpenBroadcast(false);
     };
 
+    const handleCloseFilling = () => {
+        setOpenFilling(false);
+    };
+
     const handlePlay = (playText) => {
-        console.log(playText);
         if (playText !== '') {
             let newUrl = '/api/1.0/tts?text=' + playText;
             if (newUrl !== url) {
@@ -76,6 +100,20 @@ function Compose() {
             }
         }
     };
+
+    const handleSaveFilling = (fillDict) => {
+        setOpenFilling(false);
+        let nowDict = currentItem;
+        let nowcItem = nowDict['script'];
+        for (var key in fillDict) {
+            let repKey = '{' + key + '}';
+            nowcItem = nowcItem.split(repKey).join(fillDict[key]);
+        }
+        nowDict['script'] = nowcItem;
+        handlePlay(scriptList[0]);
+        setCurrentItem(nowDict);
+        setOpenBroadcast(true);
+    }
 
     return (
         <div>
@@ -99,6 +137,7 @@ function Compose() {
             </Button>
             <EditReactDialog open={openEdit} onClose={handleCloseEdit} currentDict={currentItem} />
             <BroadcastDialog open={openBroadcast} onClose={handleCloseBroadcast} currentDict={currentItem} setUrl={setUrl} handlePlay={handlePlay} />
+            <FillingDialog open={openFilling} onClose={handleCloseFilling} fillList={fillList} onSave={handleSaveFilling} />
             <audio controls id="tts-audio-script" autoPlay src={url} type="audio/wav" hidden>
                 Your browser does not support the audio element.
             </audio>
