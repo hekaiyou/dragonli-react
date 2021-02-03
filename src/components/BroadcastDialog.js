@@ -40,9 +40,8 @@ function getSteps(scripts) {
 
 function BroadcastDialog(props) {
     const classes = useStyles();
-    const { onClose, open, currentDict } = props;
+    const { onClose, open, currentDict, setUrl, handlePlay } = props;
     const [activeStep, setActiveStep] = useState(0);
-    const [url, setUrl] = useState('');
     const steps = getSteps(currentDict.script);
 
     const handleClose = () => {
@@ -56,7 +55,8 @@ function BroadcastDialog(props) {
             case 0:
                 return ``;
             default:
-                return `占个位置`;
+                return ``;
+                // return `占个位置`;
         }
     };
 
@@ -64,24 +64,24 @@ function BroadcastDialog(props) {
         if (index + 1 < steps.length) {
             // 第一层：排除最后一个元素的点击
             let next_script = steps[index + 1].trim();
-            if (next_script !== '') {
-                let newUrl = '/api/1.0/tts?text=' + next_script;
-                if (newUrl !== url) {
-                    setUrl(newUrl);
-                } else {
-                    let ttsAudio = document.getElementById('tts-audio-script');
-                    ttsAudio.play();
-                }
-            }
+            handlePlay(next_script);
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-    const handleBack = () => {
+    const handleBack = (index) => {
+        let back_script = steps[index - 1].trim();
+        if (back_script !== '') {
+            handlePlay(back_script);
+        }
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
     const handleReset = () => {
+        let reset_script = steps[0].trim();
+        if (reset_script !== '') {
+            handlePlay(reset_script);
+        }
         setActiveStep(0);
     };
 
@@ -109,7 +109,7 @@ function BroadcastDialog(props) {
                                         <div>
                                             <Button
                                                 disabled={activeStep === 0}
-                                                onClick={handleBack}
+                                                onClick={() => { handleBack(index) }}
                                                 className={classes.button}
                                             >
                                                 Back
@@ -138,9 +138,6 @@ function BroadcastDialog(props) {
                     )}
                 </div>
             </Container>
-            <audio controls id="tts-audio-script" autoPlay src={url} type="audio/wav" hidden>
-                Your browser does not support the audio element.
-            </audio>
         </Dialog>
     );
 }

@@ -16,6 +16,7 @@ function Compose() {
     const [openBroadcast, setOpenBroadcast] = useState(false);
     const [scriptList, setScriptList] = useState([]);
     const [currentItem, setCurrentItem] = useState({});
+    const [url, setUrl] = useState('');
 
     useEffect(() => {
         handleScriptList('');
@@ -45,6 +46,8 @@ function Compose() {
     };
 
     const handleClickOpenBroadcast = (item) => {
+        let scriptList = item['script'].split(/[\s\n]/).filter(_ => _);
+        handlePlay(scriptList[0]);
         setCurrentItem(item);
         setOpenBroadcast(true);
     };
@@ -59,6 +62,19 @@ function Compose() {
 
     const handleCloseBroadcast = () => {
         setOpenBroadcast(false);
+    };
+
+    const handlePlay = (playText) => {
+        console.log(playText);
+        if (playText !== '') {
+            let newUrl = '/api/1.0/tts?text=' + playText;
+            if (newUrl !== url) {
+                setUrl(newUrl);
+            } else {
+                let ttsAudio = document.getElementById('tts-audio-script');
+                ttsAudio.play();
+            }
+        }
     };
 
     return (
@@ -82,7 +98,10 @@ function Compose() {
                 Create New Script
             </Button>
             <EditReactDialog open={openEdit} onClose={handleCloseEdit} currentDict={currentItem} />
-            <BroadcastDialog open={openBroadcast} onClose={handleCloseBroadcast} currentDict={currentItem} />
+            <BroadcastDialog open={openBroadcast} onClose={handleCloseBroadcast} currentDict={currentItem} setUrl={setUrl} handlePlay={handlePlay} />
+            <audio controls id="tts-audio-script" autoPlay src={url} type="audio/wav" hidden>
+                Your browser does not support the audio element.
+            </audio>
         </div>
     );
 }
