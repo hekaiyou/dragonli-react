@@ -49,7 +49,7 @@ function Compose() {
     };
 
     const handleClickOpenBroadcast = (item) => {
-        let scriptList = item['script'].split(/[\n]/).filter(_ => _);
+        let scriptLists = item['script'].split(/[\n]/).filter(_ => _);
         let reg = /(?<={).*?(?=(}|$))/g;
         let valueList = [];
         if (item['script'].search(reg) !== -1) {
@@ -63,7 +63,7 @@ function Compose() {
             setFillList(valueList);
             handleOpenFilling();
         } else {
-            handlePlay(scriptList[0]);
+            handlePlay(scriptLists[0]);
             setCurrentItem(item);
             setOpenBroadcast(true);
         }
@@ -109,8 +109,9 @@ function Compose() {
             let repKey = '{' + key + '}';
             nowcItem = nowcItem.split(repKey).join(fillDict[key]);
         }
+        let scriptLists = nowcItem.split(/[\n]/).filter(_ => _);
         nowDict['script'] = nowcItem;
-        handlePlay(scriptList[0]);
+        handlePlay(scriptLists[0]);
         setCurrentItem(nowDict);
         setOpenBroadcast(true);
     }
