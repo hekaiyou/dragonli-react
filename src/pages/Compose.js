@@ -83,6 +83,8 @@ function Compose() {
 
     const handleCloseBroadcast = () => {
         setOpenBroadcast(false);
+        let oldSearchValue = document.getElementById('search').value;
+        handleScriptList(oldSearchValue);
     };
 
     const handleCloseFilling = () => {
