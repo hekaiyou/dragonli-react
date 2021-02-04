@@ -31,7 +31,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function getSteps(scripts) {
     if (scripts) {
-        let scriptArr = scripts.split(/[\s\n]/).filter(_ => _);
+        let scriptArr = scripts.split(/[\n]/).filter(_ => _);
         return scriptArr;
     } else {
         return [];

@@ -49,7 +49,7 @@ function Compose() {
     };
 
     const handleClickOpenBroadcast = (item) => {
-        let scriptList = item['script'].split(/[\s\n]/).filter(_ => _);
+        let scriptList = item['script'].split(/[\n]/).filter(_ => _);
         let reg = /(?<={).*?(?=(}|$))/g;
         let valueList = [];
         if (item['script'].search(reg) !== -1) {
