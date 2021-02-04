@@ -56,7 +56,7 @@ function BroadcastDialog(props) {
                 return ``;
             default:
                 return ``;
-                // return `占个位置`;
+            // return `占个位置`;
         }
     };
 
@@ -85,6 +85,16 @@ function BroadcastDialog(props) {
         setActiveStep(0);
     };
 
+    const handleJumpTo = (index) => {
+        if (activeStep !== index) {
+            setActiveStep(index);
+            let reset_script = steps[index].trim();
+            if (reset_script !== '') {
+                handlePlay(reset_script);
+            }
+        }
+    };
+
     return (
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
             <AppBar className={classes.appBar}>
@@ -102,7 +112,7 @@ function BroadcastDialog(props) {
                     <Stepper activeStep={activeStep} orientation="vertical">
                         {steps.map((label, index) => (
                             <Step key={index}>
-                                <StepLabel>{label}</StepLabel>
+                                <StepLabel onClick={() => { handleJumpTo(index) }}>{label}</StepLabel>
                                 <StepContent>
                                     <Typography>{getStepContent(index, label)}</Typography>
                                     <div className={classes.actionsContainer}>
