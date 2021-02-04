@@ -56,7 +56,7 @@ function BroadcastDialog(props) {
                 return ``;
             default:
                 return ``;
-            // return `占个位置`;
+                // return `占个位置`;
         }
     };
 
@@ -88,10 +88,10 @@ function BroadcastDialog(props) {
     const handleJumpTo = (index) => {
         if (activeStep !== index) {
             setActiveStep(index);
-            let reset_script = steps[index].trim();
-            if (reset_script !== '') {
-                handlePlay(reset_script);
-            }
+        }
+        let reset_script = steps[index].trim();
+        if (reset_script !== '') {
+            handlePlay(reset_script);
         }
     };
 
