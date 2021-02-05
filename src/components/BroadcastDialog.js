@@ -29,20 +29,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function getSteps(scripts) {
-    if (scripts) {
-        let scriptArr = scripts.split(/[\n]/).filter(_ => _);
-        return scriptArr;
-    } else {
-        return [];
-    }
-}
-
 function BroadcastDialog(props) {
     const classes = useStyles();
-    const { onClose, open, currentDict, setUrl, handlePlay } = props;
+    const { onClose, open, currentDict, setUrl, handlePlay, currentItemList } = props;
     const [activeStep, setActiveStep] = useState(0);
-    const steps = getSteps(currentDict.script);
+    const steps = currentItemList;
 
     const handleClose = () => {
         setUrl('');
@@ -51,26 +42,24 @@ function BroadcastDialog(props) {
     };
 
     const getStepContent = (step, script) => {
-        switch (script) {
-            case 0:
-                return ``;
-            default:
-                return ``;
-                // return `占个位置`;
+        if (script.describe.trim() !== '') {
+            return script.describe;
+        } else {
+            return ``;
         }
     };
 
     const handleNext = (index) => {
         if (index + 1 < steps.length) {
             // 第一层：排除最后一个元素的点击
-            let next_script = steps[index + 1].trim();
+            let next_script = steps[index + 1]['text'].trim();
             handlePlay(next_script);
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
     const handleBack = (index) => {
-        let back_script = steps[index - 1].trim();
+        let back_script = steps[index - 1]['text'].trim();
         if (back_script !== '') {
             handlePlay(back_script);
         }
@@ -78,7 +67,7 @@ function BroadcastDialog(props) {
     };
 
     const handleReset = () => {
-        let reset_script = steps[0].trim();
+        let reset_script = steps[0]['text'].trim();
         if (reset_script !== '') {
             handlePlay(reset_script);
         }
@@ -89,7 +78,7 @@ function BroadcastDialog(props) {
         if (activeStep !== index) {
             setActiveStep(index);
         }
-        let reset_script = steps[index].trim();
+        let reset_script = steps[index]['text'].trim();
         if (reset_script !== '') {
             handlePlay(reset_script);
         }
@@ -112,7 +101,7 @@ function BroadcastDialog(props) {
                     <Stepper activeStep={activeStep} orientation="vertical">
                         {steps.map((label, index) => (
                             <Step key={index}>
-                                <StepLabel onClick={() => { handleJumpTo(index) }}>{label}</StepLabel>
+                                <StepLabel onClick={() => { handleJumpTo(index) }}>{label.text}</StepLabel>
                                 <StepContent>
                                     <Typography>{getStepContent(index, label)}</Typography>
                                     <div className={classes.actionsContainer}>

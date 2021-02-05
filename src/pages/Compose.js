@@ -12,6 +12,24 @@ import BroadcastDialog from '../components/BroadcastDialog.js';
 import FillingDialog from '../components/FillingDialog.js';
 import axios from 'axios';
 
+function handleScriptsAnalysis(scriptLists) {
+    let avDescribe = '';
+    let avList = [];
+    for (var i in scriptLists) {
+        let av = scriptLists[i];
+        if (av.indexOf('#') === -1) {
+            avList.push({ 'text': scriptLists[i], 'describe': avDescribe });
+            avDescribe = '';
+        } else {
+            let avSplit = scriptLists[i].split('#')
+            if (avSplit[0].trim() === '') {
+                avDescribe += avSplit[1].trim();
+            }
+        }
+    };
+    return avList;
+};
+
 function Compose() {
     const [openEdit, setOpenEdit] = useState(false);
     const [openBroadcast, setOpenBroadcast] = useState(false);
@@ -20,6 +38,7 @@ function Compose() {
     const [currentItem, setCurrentItem] = useState({});
     const [url, setUrl] = useState('');
     const [fillList, setFillList] = useState([]);
+    const [currentItemList, setCurrentItemList] = useState([]);
 
     useEffect(() => {
         handleScriptList('');
@@ -63,8 +82,10 @@ function Compose() {
             setFillList(valueList);
             handleOpenFilling();
         } else {
-            handlePlay(scriptLists[0]);
+            let analysisList = handleScriptsAnalysis(scriptLists)
+            handlePlay(analysisList[0]['text']);
             setCurrentItem(item);
+            setCurrentItemList(analysisList);
             setOpenBroadcast(true);
         }
     };
@@ -111,14 +132,16 @@ function Compose() {
             let repKey = '{' + key + '}';
             nowcItem = nowcItem.split(repKey).join(fillDict[key]);
         }
-        if (Object.keys(fillDict).length===0) {
+        if (Object.keys(fillDict).length === 0) {
             nowcItem = nowcItem.split('{').join('');
             nowcItem = nowcItem.split('}').join('');
         }
         let scriptLists = nowcItem.split(/[\n]/).filter(_ => _);
+        let analysisList = handleScriptsAnalysis(scriptLists)
         nowDict['script'] = nowcItem;
-        handlePlay(scriptLists[0]);
+        handlePlay(analysisList[0]['text']);
         setCurrentItem(nowDict);
+        setCurrentItemList(analysisList);
         setOpenBroadcast(true);
     }
 
@@ -143,7 +166,7 @@ function Compose() {
                 Create New Script
             </Button>
             <EditReactDialog open={openEdit} onClose={handleCloseEdit} currentDict={currentItem} />
-            <BroadcastDialog open={openBroadcast} onClose={handleCloseBroadcast} currentDict={currentItem} setUrl={setUrl} handlePlay={handlePlay} />
+            <BroadcastDialog open={openBroadcast} onClose={handleCloseBroadcast} currentDict={currentItem} setUrl={setUrl} handlePlay={handlePlay} currentItemList={currentItemList} />
             <FillingDialog open={openFilling} onClose={handleCloseFilling} fillList={fillList} onSave={handleSaveFilling} />
             <audio controls id="tts-audio-script" autoPlay src={url} type="audio/wav" hidden>
                 Your browser does not support the audio element.
