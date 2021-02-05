@@ -8,16 +8,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 function FillingDialog(props) {
     const { onClose, open, fillList, onSave } = props;
-    const [subDisabled, setSubDisabled] = useState(true);
     const [fillDict, setFillDict] = useState({});
 
     const handleClose = () => {
-        setSubDisabled(true);
         onClose();
     };
 
     const handleSave = () => {
-        setSubDisabled(true);
         onSave(fillDict);
     };
 
@@ -26,13 +23,12 @@ function FillingDialog(props) {
         for (var i = 0; i < fillList.length; i++) {
             let value = document.getElementById(fillList[i]).value;
             if (value.trim() === '') {
-                setSubDisabled(true);
-                return;
+                valDict[fillList[i]] = fillList[i];
+            } else {
+                valDict[fillList[i]] = value;
             }
-            valDict[fillList[i]] = value;
         }
         setFillDict(valDict);
-        setSubDisabled(false);
     };
 
     return (
@@ -55,7 +51,7 @@ function FillingDialog(props) {
                 <Button onClick={handleClose} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={handleSave} color="primary" disabled={subDisabled}>
+                <Button onClick={handleSave} color="primary">
                     Start
                 </Button>
             </DialogActions>

@@ -111,6 +111,10 @@ function Compose() {
             let repKey = '{' + key + '}';
             nowcItem = nowcItem.split(repKey).join(fillDict[key]);
         }
+        if (Object.keys(fillDict).length===0) {
+            nowcItem = nowcItem.split('{').join('');
+            nowcItem = nowcItem.split('}').join('');
+        }
         let scriptLists = nowcItem.split(/[\n]/).filter(_ => _);
         nowDict['script'] = nowcItem;
         handlePlay(scriptLists[0]);
