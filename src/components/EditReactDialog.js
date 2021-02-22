@@ -67,7 +67,7 @@ function EditReactDialog(props) {
                 id: currentDict.id,
                 title: titleValue,
                 script: contentValue,
-                language: currentDict.language,
+                language: language,
             }).then(function (response) {
                 onClose(true);
             }).catch(function (error) {
@@ -78,7 +78,7 @@ function EditReactDialog(props) {
             axios.post('/api/1.0/script', {
                 title: titleValue,
                 script: contentValue,
-                language: currentDict.language,
+                language: language,
             }).then(function (response) {
                 onClose(true);
             }).catch(function (error) {
