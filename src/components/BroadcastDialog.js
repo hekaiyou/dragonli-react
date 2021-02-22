@@ -31,7 +31,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function BroadcastDialog(props) {
     const classes = useStyles();
-    const { onClose, open, currentDict, setUrl, handlePlay, currentItemList } = props;
+    const { onClose, open, currentDict, setUrl, handlePlay, currentItemList, language } = props;
     const [activeStep, setActiveStep] = useState(0);
     const steps = currentItemList;
 
@@ -53,7 +53,7 @@ function BroadcastDialog(props) {
         if (index + 1 < steps.length) {
             // 第一层：排除最后一个元素的点击
             let next_script = steps[index + 1]['text'].trim();
-            handlePlay(next_script);
+            handlePlay(next_script, language);
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -61,7 +61,7 @@ function BroadcastDialog(props) {
     const handleBack = (index) => {
         let back_script = steps[index - 1]['text'].trim();
         if (back_script !== '') {
-            handlePlay(back_script);
+            handlePlay(back_script, language);
         }
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
@@ -69,7 +69,7 @@ function BroadcastDialog(props) {
     const handleReset = () => {
         let reset_script = steps[0]['text'].trim();
         if (reset_script !== '') {
-            handlePlay(reset_script);
+            handlePlay(reset_script, language);
         }
         setActiveStep(0);
     };
@@ -80,7 +80,7 @@ function BroadcastDialog(props) {
         }
         let reset_script = steps[index]['text'].trim();
         if (reset_script !== '') {
-            handlePlay(reset_script);
+            handlePlay(reset_script, language);
         }
     };
 

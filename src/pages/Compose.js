@@ -76,6 +76,7 @@ function Compose() {
         let scriptLists = item['script'].split(/[\n]/).filter(_ => _);
         let reg = /(?<={).*?(?=(}|$))/g;
         let valueList = [];
+        setLanguage(item.language);
         if (item['script'].search(reg) !== -1) {
             item['script'].match(reg).map(function (v) {
                 if (valueList.indexOf(v) === -1) {
@@ -88,7 +89,7 @@ function Compose() {
             handleOpenFilling();
         } else {
             let analysisList = handleScriptsAnalysis(scriptLists)
-            handlePlay(analysisList[0]['text']);
+            handlePlay(analysisList[0]['text'], item.language);
             setCurrentItem(item);
             setCurrentItemList(analysisList);
             setOpenBroadcast(true);
@@ -117,9 +118,9 @@ function Compose() {
         setOpenFilling(false);
     };
 
-    const handlePlay = (playText) => {
+    const handlePlay = (playText, languageValue) => {
         if (playText !== '') {
-            let newUrl = '/api/1.0/tts?text=' + playText;
+            let newUrl = '/api/1.0/tts?text=' + playText + '&language=' + languageValue;
             if (newUrl !== url) {
                 setUrl(newUrl);
             } else {
@@ -144,7 +145,7 @@ function Compose() {
         let scriptLists = nowcItem.split(/[\n]/).filter(_ => _);
         let analysisList = handleScriptsAnalysis(scriptLists)
         nowDict['script'] = nowcItem;
-        handlePlay(analysisList[0]['text']);
+        handlePlay(analysisList[0]['text'], nowDict['language']);
         setCurrentItem(nowDict);
         setCurrentItemList(analysisList);
         setOpenBroadcast(true);
@@ -171,7 +172,7 @@ function Compose() {
                 Create New Script
             </Button>
             <EditReactDialog open={openEdit} onClose={handleCloseEdit} currentDict={currentItem} language={language} setLanguage={setLanguage} />
-            <BroadcastDialog open={openBroadcast} onClose={handleCloseBroadcast} currentDict={currentItem} setUrl={setUrl} handlePlay={handlePlay} currentItemList={currentItemList} />
+            <BroadcastDialog open={openBroadcast} onClose={handleCloseBroadcast} currentDict={currentItem} setUrl={setUrl} handlePlay={handlePlay} currentItemList={currentItemList} language={language} />
             <FillingDialog open={openFilling} onClose={handleCloseFilling} fillList={fillList} onSave={handleSaveFilling} />
             <audio controls id="tts-audio-script" autoPlay src={url} type="audio/wav" hidden>
                 Your browser does not support the audio element.
