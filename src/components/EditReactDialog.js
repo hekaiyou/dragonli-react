@@ -16,6 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
+import LanguageSelection from '../components/LanguageSelection.js';
 
 import axios from 'axios';
 
@@ -40,7 +41,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function EditReactDialog(props) {
     const classes = useStyles();
-    const { onClose, open, currentDict } = props;
+    const { onClose, open, currentDict, language, setLanguage } = props;
     const [subDisabled, setSubDisabled] = useState(true);
     const [deleteDisabled, setDeleteDisabled] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
@@ -66,6 +67,7 @@ function EditReactDialog(props) {
                 id: currentDict.id,
                 title: titleValue,
                 script: contentValue,
+                language: currentDict.language,
             }).then(function (response) {
                 onClose(true);
             }).catch(function (error) {
@@ -76,6 +78,7 @@ function EditReactDialog(props) {
             axios.post('/api/1.0/script', {
                 title: titleValue,
                 script: contentValue,
+                language: currentDict.language,
             }).then(function (response) {
                 onClose(true);
             }).catch(function (error) {
@@ -131,6 +134,8 @@ function EditReactDialog(props) {
                 <form noValidate autoComplete="off">
                     <p />
                     <TextField id="script-title" label="Script Title" defaultValue={currentDict.title} onChange={handleTextFieldChange} fullWidth />
+                    <p />
+                    <LanguageSelection language={language} setLanguage={setLanguage} />
                     <p />
                     <TextField id="script-content" label="Script Content (Enter Wrap)" defaultValue={currentDict.script} onChange={handleTextFieldChange} multiline fullWidth />
                 </form>

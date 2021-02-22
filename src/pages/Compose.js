@@ -39,6 +39,7 @@ function Compose() {
     const [url, setUrl] = useState('');
     const [fillList, setFillList] = useState([]);
     const [currentItemList, setCurrentItemList] = useState([]);
+    const [language, setLanguage] = useState('auto');
 
     useEffect(() => {
         handleScriptList('');
@@ -63,6 +64,10 @@ function Compose() {
     };
 
     const handleClickOpenEdit = (item) => {
+        if (!item.language) {
+            item['language'] = 'auto';
+        }
+        setLanguage(item.language);
         setCurrentItem(item);
         setOpenEdit(true);
     };
@@ -165,7 +170,7 @@ function Compose() {
             <Button variant="contained" color="primary" fullWidth onClick={() => { handleClickOpenEdit({}) }}>
                 Create New Script
             </Button>
-            <EditReactDialog open={openEdit} onClose={handleCloseEdit} currentDict={currentItem} />
+            <EditReactDialog open={openEdit} onClose={handleCloseEdit} currentDict={currentItem} language={language} setLanguage={setLanguage} />
             <BroadcastDialog open={openBroadcast} onClose={handleCloseBroadcast} currentDict={currentItem} setUrl={setUrl} handlePlay={handlePlay} currentItemList={currentItemList} />
             <FillingDialog open={openFilling} onClose={handleCloseFilling} fillList={fillList} onSave={handleSaveFilling} />
             <audio controls id="tts-audio-script" autoPlay src={url} type="audio/wav" hidden>

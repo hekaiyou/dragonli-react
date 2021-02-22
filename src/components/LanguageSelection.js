@@ -10,7 +10,6 @@ function LanguageSelection(props) {
     const [languageValue] = useState(language);
 
     const handleSelectClick = (e) => {
-        console.log(e.target.value);
         if (e.target.value) {
             setLanguage(e.target.value);
         } else {
