@@ -35,6 +35,26 @@ function LanguageSelection(props) {
                 <MenuItem value="zh-TW-HsiaoChenNeural">HsiaoChen (Neural) - 曉臻</MenuItem>
                 <MenuItem value="zh-TW-HsiaoYuNeural">HsiaoYu (Neural) - 曉雨</MenuItem>
                 <MenuItem value="zh-TW-YunJheNeural">YunJhe (Neural) - 雲哲</MenuItem>
+                <ListSubheader>Dutch</ListSubheader>
+                <MenuItem value="nl-NL-ColetteNeural">Colette (Neural)</MenuItem>
+                <MenuItem value="nl-NL-FennaNeural">Fenna (Neural)</MenuItem>
+                <MenuItem value="nl-NL-MaartenNeural">Maarten (Neural)</MenuItem>
+                <ListSubheader>English (Australia)</ListSubheader>
+                <MenuItem value="en-AU-NatashaNeural">Natasha (Neural)</MenuItem>
+                <MenuItem value="en-AU-WilliamNeural">William (Neural)</MenuItem>
+                <ListSubheader>English (Canada)</ListSubheader>
+                <MenuItem value="en-CA-ClaraNeural">Clara (Neural)</MenuItem>
+                <MenuItem value="en-CA-LiamNeural">Liam (Neural)</MenuItem>
+                <ListSubheader>English (India)</ListSubheader>
+                <MenuItem value="en-IN-NeerjaNeural">Neerja (Neural)</MenuItem>
+                <MenuItem value="en-IN-PrabhatNeural">Prabhat (Neural)</MenuItem>
+                <ListSubheader>English (Ireland)</ListSubheader>
+                <MenuItem value="en-IE-ConnorNeural">Connor (Neural)</MenuItem>
+                <MenuItem value="en-IE-EmilyNeural">Emily (Neural)</MenuItem>
+                <ListSubheader>English (UK)</ListSubheader>
+                <MenuItem value="en-GB-MiaNeural">Mia (Neural)</MenuItem>
+                <MenuItem value="en-GB-LibbyNeural">Libby (Neural)</MenuItem>
+                <MenuItem value="en-GB-RyanNeural">Ryan (Neural)</MenuItem>
                 <ListSubheader>English (US)</ListSubheader>
                 <MenuItem value="en-US-JennyNeural">Jenny (Neural)</MenuItem>
                 <MenuItem value="en-US-GuyNeural">Guy (Neural)</MenuItem>
@@ -58,10 +78,23 @@ function LanguageSelection(props) {
                 <ListSubheader>German (Switzerland)</ListSubheader>
                 <MenuItem value="de-CH-JanNeural">Jan (Neural)</MenuItem>
                 <MenuItem value="de-CH-LeniNeural">Leni (Neural)</MenuItem>
+                <ListSubheader>Italian</ListSubheader>
+                <MenuItem value="it-IT-IsabellaNeural">Isabella (Neural)</MenuItem>
+                <MenuItem value="it-IT-DiegoNeural">Diego (Neural)</MenuItem>
+                <MenuItem value="it-IT-ElsaNeural">Elsa (Neural)</MenuItem>
+                <ListSubheader>Japanese</ListSubheader>
+                <MenuItem value="ja-JP-NanamiNeural">Nanami (Neural) - 七海</MenuItem>
+                <MenuItem value="ja-JP-KeitaNeural">Keita (Neural) - 圭太</MenuItem>
                 <ListSubheader>Russian</ListSubheader>
                 <MenuItem value="ru-RU-SvetlanaNeural">Svetlana (Neural) - Светлана</MenuItem>
                 <MenuItem value="ru-RU-DariyaNeural">Dariya (Neural) - Дария</MenuItem>
                 <MenuItem value="ru-RU-DmitryNeural">Dmitry (Neural) - Дмитрий</MenuItem>
+                <ListSubheader>Spanish (Mexico)</ListSubheader>
+                <MenuItem value="es-MX-DaliaNeural">Dalia (Neural)</MenuItem>
+                <MenuItem value="es-MX-JorgeNeural">Jorge (Neural)</MenuItem>
+                <ListSubheader>Spanish (Spain)</ListSubheader>
+                <MenuItem value="es-ES-AlvaroNeural">Alvaro (Neural) - Álvaro</MenuItem>
+                <MenuItem value="es-ES-ElviraNeural">Elvira (Neural)</MenuItem>
             </Select>
         </FormControl>
     );
